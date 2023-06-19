@@ -33,5 +33,13 @@ gradlePlugin {
             id = "amarinag.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidLibraryCompose") {
+            id = "amarinag.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+        register("androidLibrary") {
+            id = "amarinag.android.library"
+            implementationClass = "AndroidLibraryConventionPlugin"
+        }
     }
 }
