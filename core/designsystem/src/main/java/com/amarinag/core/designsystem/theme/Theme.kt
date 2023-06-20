@@ -1,7 +1,8 @@
-package com.amarinag.movieexplorer.ui.theme
+package com.amarinag.core.designsystem.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -10,32 +11,70 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-        primary = Purple80,
-        secondary = PurpleGrey80,
-        tertiary = Pink80
+@VisibleForTesting
+val LightColorScheme = lightColorScheme(
+    primary = Mint80,
+    onPrimary = Mint20,
+    primaryContainer = Mint30,
+    onPrimaryContainer = Mint90,
+    secondary = Graphite80,
+    onSecondary = Graphite20,
+    secondaryContainer = Graphite30,
+    onSecondaryContainer = Graphite90,
+    tertiary = SlateGray80,
+    onTertiary = SlateGray20,
+    tertiaryContainer = SlateGray30,
+    onTertiaryContainer = SlateGray90,
+    error = Rose80,
+    onError = Rose20,
+    errorContainer = Rose30,
+    onErrorContainer = Rose90,
+    background = Charcoal10,
+    onBackground = Charcoal90,
+    surface = Charcoal10,
+    onSurface = Charcoal90,
+    surfaceVariant = SlateGray30,
+    onSurfaceVariant = SlateGray80,
+    inverseSurface = Charcoal90,
+    inverseOnSurface = Charcoal10,
+    outline = SlateGray80,
 )
 
-private val LightColorScheme = lightColorScheme(
-        primary = Purple40,
-        secondary = PurpleGrey40,
-        tertiary = Pink40
-
-        /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+@VisibleForTesting
+val DarkColorScheme = darkColorScheme(
+    primary = Mint40,
     onPrimary = Color.White,
+    primaryContainer = Mint90,
+    onPrimaryContainer = Mint10,
+    secondary = Graphite40,
     onSecondary = Color.White,
+    secondaryContainer = Graphite90,
+    onSecondaryContainer = Graphite10,
+    tertiary = SlateGray40,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    tertiaryContainer = SlateGray90,
+    onTertiaryContainer = SlateGray10,
+    error = Rose40,
+    onError = Color.White,
+    errorContainer = Rose90,
+    onErrorContainer = Rose10,
+    background = Charcoal90,
+    onBackground = Charcoal10,
+    surface = Charcoal90,
+    onSurface = Charcoal10,
+    surfaceVariant = SlateGray80,
+    onSurfaceVariant = SlateGray30,
+    inverseSurface = Charcoal10,
+    inverseOnSurface = Charcoal90,
+    outline = SlateGray80,
 )
+
 
 @Composable
 fun MovieExplorerTheme(

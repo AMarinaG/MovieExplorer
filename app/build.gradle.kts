@@ -36,8 +36,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:designsystem"))
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
     implementation(libs.androidx.compose.ui)
