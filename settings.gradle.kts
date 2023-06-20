@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "MovieExplorer"
 include(":app")
 include(":core:designsystem")
+include(":feature:favorite")

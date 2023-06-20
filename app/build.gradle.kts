@@ -36,6 +36,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:favorite"))
+
     implementation(project(":core:designsystem"))
 
     implementation(libs.androidx.core.ktx)
