@@ -19,6 +19,7 @@ class AndroidFeatureConventionPlugin: Plugin<Project> {
             }
 
             dependencies {
+                add("implementation", project(":core:model"))
                 add("implementation", project(":core:designsystem"))
 
                 add("testImplementation", kotlin("test"))
