@@ -1,0 +1,36 @@
+import com.amarinag.movieexplorer.libs
+import com.android.build.api.dsl.LibraryExtension
+import org.gradle.api.Plugin
+import org.gradle.api.Project
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.kotlin
+
+class AndroidFeatureConventionPlugin: Plugin<Project> {
+    override fun apply(target: Project) {
+        with(target) {
+            pluginManager.apply {
+                apply("amarinag.android.library")
+            }
+            extensions.configure<LibraryExtension> {
+                defaultConfig {
+                }
+                // configure Managed Devices
+            }
+
+            dependencies {
+                add("implementation", project(":core:designsystem"))
+
+                add("testImplementation", kotlin("test"))
+
+                add("androidTestImplementation", kotlin("test"))
+
+
+                add("implementation", libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
+                add("implementation", libs.findLibrary("androidx.lifecycle.viewModelCompose").get())
+
+                add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
+            }
+        }
+    }
+}
