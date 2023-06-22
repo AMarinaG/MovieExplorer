@@ -45,6 +45,10 @@ gradlePlugin {
             id = "amarinag.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
+        register("androidHilt") {
+            id = "amarinag.android.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
         register("jvmLibrary") {
             id = "amarinag.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"

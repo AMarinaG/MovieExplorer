@@ -4,6 +4,8 @@ androidDesugarJdkLibs = "2.0.3"
 kotlin = "1.8.20"
 kotlinxCoroutines = "1.6.4"
 kotlinxDatetime = "0.4.0"
+ksp = "1.8.20-1.0.11"
+
 junit4 = "4.13.2"
 androidxComposeBom = "2023.06.00"
 androidxComposeCompiler = "1.4.5"
@@ -20,6 +22,8 @@ androidxUiAutomator = "2.2.0"
 coil = "2.4.0"
 espresso-core = "3.5.1"
 lifecycle-runtime-ktx = "2.6.1"
+hilt = "2.44.2"
+hiltExt = "1.0.0"
 activity-compose = "1.7.2"
 
 #To delete
@@ -69,6 +73,12 @@ coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 coil-kt-svg = { group = "io.coil-kt", name = "coil-svg", version.ref = "coil" }
 
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+hilt-ext-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltExt" }
+hilt-ext-work = { group = "androidx.hilt", name = "hilt-work", version.ref = "hiltExt" }
+
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk8", version.ref = "kotlin" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
@@ -81,10 +91,11 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-com-android-library = { id = "com.android.library", version.ref = "agp" }
-org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "org-jetbrains-kotlin-android" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 
 [bundles]
 
