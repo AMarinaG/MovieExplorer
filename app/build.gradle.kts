@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:nowplaying"))
     implementation(project(":feature:favorite"))
 
     implementation(project(":core:common"))
@@ -60,4 +61,6 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.coil.kt)
+
 }

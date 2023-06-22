@@ -5,8 +5,13 @@ import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.util.DebugLogger
 import com.amarinag.core.network.BuildConfig
+import com.amarinag.core.network.MovieNetworkDataSource
+import com.amarinag.core.network.retrofit.RetrofitMovieNetwork
 import com.amarinag.core.network.retrofit.RetrofitMovieNetworkApi
+import com.amarinag.core.network.retrofit.interceptor.AuthInterceptor
+import com.amarinag.core.network.retrofit.interceptor.LangInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,16 +36,24 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providesHttpCallFactory(): Call.Factory = OkHttpClient.Builder()
-        .addInterceptor(
-            HttpLoggingInterceptor()
-                .apply {
-                    if (BuildConfig.DEBUG) {
-                        setLevel(HttpLoggingInterceptor.Level.BODY)
-                        redactHeader("Authorization")
+    fun providesHttpCallFactory(
+        authInterceptor: AuthInterceptor,
+        langInterceptor: LangInterceptor
+    ): Call.Factory =
+        OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .addInterceptor(langInterceptor)
+            .addInterceptor(
+                HttpLoggingInterceptor()
+                    .apply {
+                        if (BuildConfig.DEBUG) {
+                            setLevel(HttpLoggingInterceptor.Level.BODY)
+                            redactHeader("Authorization")
+                        }
                     }
-                }
-        ).build()
+
+            )
+            .build()
 
     @Provides
     @Singleton
@@ -72,4 +85,11 @@ object NetworkModule {
         )
         .build()
         .create(RetrofitMovieNetworkApi::class.java)
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface BindsNetworkModule {
+    @Binds
+    fun bindsNetworkModule(retrofitMovieNetwork: RetrofitMovieNetwork): MovieNetworkDataSource
 }
