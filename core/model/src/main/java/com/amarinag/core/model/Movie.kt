@@ -9,7 +9,6 @@ data class Movie(
     val originalTitle: String,
     val overview: String,
     val posterPath: String,
-    val mediaType: String,
     val genreIds: List<Int>,
     val popularity: Double,
     val releaseDate: String,
