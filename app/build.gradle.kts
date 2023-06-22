@@ -39,7 +39,10 @@ android {
 dependencies {
     implementation(project(":feature:favorite"))
 
+    implementation(project(":core:common"))
     implementation(project(":core:designsystem"))
+    implementation(project(":core:data"))
+    implementation(project(":core:model"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
