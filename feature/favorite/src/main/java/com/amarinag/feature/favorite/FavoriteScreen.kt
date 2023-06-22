@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -25,7 +26,7 @@ import com.amarinag.core.designsystem.theme.spacing
 import com.amarinag.core.model.Movie
 
 @Composable
-internal fun FavoriteRoute(viewModel: FavoriteViewModel = viewModel()) {
+internal fun FavoriteRoute(viewModel: FavoriteViewModel = hiltViewModel()) {
     val favoriteState by viewModel.favoriteUiState.collectAsStateWithLifecycle()
     FavoriteScreen(favoriteUiState = favoriteState)
 }

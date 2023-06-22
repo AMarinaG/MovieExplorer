@@ -3,13 +3,16 @@ package com.amarinag.feature.favorite
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.amarinag.core.model.Movie
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
 
-class FavoriteViewModel : ViewModel() {
+@HiltViewModel
+class FavoriteViewModel @Inject constructor() : ViewModel() {
     val favoriteUiState: StateFlow<FavoriteUiState> = flow {
         delay(2000)
         emit(FavoriteUiState.Success(movies))
