@@ -16,6 +16,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "MovieExplorer"
 include(":app")
+include(":core:common")
 include(":core:data")
 include(":core:designsystem")
 include(":core:domain")
