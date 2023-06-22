@@ -2,6 +2,7 @@
 plugins {
     id("amarinag.android.application")
     id("amarinag.android.application.compose")
+    id("amarinag.android.hilt")
 }
 
 android {
