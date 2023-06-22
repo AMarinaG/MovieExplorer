@@ -25,22 +25,21 @@ import com.amarinag.core.designsystem.theme.spacing
 import com.amarinag.core.model.Movie
 
 @Composable
-fun FavoriteRoute(modifier: Modifier = Modifier, viewModel: FavoriteViewModel = viewModel()) {
+internal fun FavoriteRoute(viewModel: FavoriteViewModel = viewModel()) {
     val favoriteState by viewModel.favoriteUiState.collectAsStateWithLifecycle()
-    FavoriteScreen(favoriteUiState = favoriteState, modifier = modifier)
+    FavoriteScreen(favoriteUiState = favoriteState)
 }
 
 @Composable
 internal fun FavoriteScreen(
     favoriteUiState: FavoriteUiState,
-    modifier: Modifier = Modifier
 ) {
     when (favoriteUiState) {
-        FavoriteUiState.Loading -> LoadingState(modifier)
+        FavoriteUiState.Loading -> LoadingState()
         is FavoriteUiState.Success -> if (favoriteUiState.movies.isNotEmpty()) {
-            FavoriteGrid(movies = favoriteUiState.movies, modifier)
+            FavoriteGrid(movies = favoriteUiState.movies)
 
-        } else EmptyState(modifier)
+        } else EmptyState()
     }
 }
 
@@ -48,7 +47,6 @@ internal fun FavoriteScreen(
 @Composable
 private fun FavoriteGrid(
     movies: List<Movie>,
-    modifier: Modifier = Modifier
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -56,7 +54,7 @@ private fun FavoriteGrid(
             horizontal = MaterialTheme.spacing.tiny,
             vertical = MaterialTheme.spacing.tiny
         ),
-        modifier = modifier
+        modifier = Modifier.fillMaxSize()
     ) {
         items(movies, key = { it.id }) {
             Card(
@@ -89,11 +87,11 @@ private fun FavoriteGrid(
 }
 
 @Composable
-fun EmptyState(modifier: Modifier = Modifier) {
+fun EmptyState() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         Text(
             text = stringResource(id = R.string.no_favorite_movies),
@@ -103,11 +101,11 @@ fun EmptyState(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun LoadingState(modifier: Modifier = Modifier) {
+fun LoadingState() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         Text(
             text = stringResource(id = R.string.loading),

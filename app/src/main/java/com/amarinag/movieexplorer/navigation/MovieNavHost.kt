@@ -1,23 +1,23 @@
 package com.amarinag.movieexplorer.navigation
 
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import com.amarinag.feature.favorite.FavoriteRoute
+import com.amarinag.feature.favorite.navigation.favoriteRoute
+import com.amarinag.feature.favorite.navigation.favoriteScreen
 
 @Composable
 fun MovieNavHost(
-    windowSizeClass: WindowSizeClass,
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = "home"
+    startDestination: String = favoriteRoute
 ) {
-    NavHost(navController = navController, startDestination = startDestination) {
-        composable(startDestination) {
-            FavoriteRoute()
-        }
+    NavHost(
+        navController = navController,
+        startDestination = startDestination,
+        modifier = modifier
+    ) {
+        favoriteScreen()
     }
 }
