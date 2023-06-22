@@ -18,6 +18,7 @@ rootProject.name = "MovieExplorer"
 include(":app")
 include(":core:data")
 include(":core:designsystem")
+include(":core:domain")
 include(":core:model")
 include(":core:network")
 
