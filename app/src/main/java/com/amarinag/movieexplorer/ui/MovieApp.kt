@@ -8,37 +8,33 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
-import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
-import com.amarinag.feature.favorite.navigation.navigateToFavorite
-import com.amarinag.feature.nowplaying.navigation.navigateToNowPlaying
 import com.amarinag.movieexplorer.navigation.MovieNavHost
 import com.amarinag.movieexplorer.navigation.TopLevelDestination
 
 @Composable
-fun MovieApp() {
-    val navController = rememberNavController()
+fun MovieApp(
+    windowSizeClass: WindowSizeClass,
+    appState: MovieAppState = rememberMovieAppState(windowSizeClass = windowSizeClass)
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             MovieBottomBar(
-                TopLevelDestination.values().toList(),
-                { navController.navigateToTopLevelDestination(it) },
-                navController.currentDestination()
+                destinations = appState.topLevelDestination,
+                onNavigateToDestination = appState::navigateToTopLevelDestination,
+                currentDestination = appState.currentDestination
             )
         }
     ) { padding ->
         Column(Modifier.padding(padding)) {
-            MovieNavHost(navController = navController)
+            MovieNavHost(appState = appState)
         }
     }
 }
@@ -76,26 +72,6 @@ private fun MovieBottomBar(
                     Text(text = stringResource(id = destination.iconTextId))
                 })
         }
-    }
-}
-
-@Composable
-fun NavController.currentDestination(): NavDestination? {
-    return currentBackStackEntryAsState().value?.destination
-}
-
-private fun NavController.navigateToTopLevelDestination(topLevelDestination: TopLevelDestination) {
-    val topLevelNavOptions = navOptions {
-        popUpTo(this@navigateToTopLevelDestination.graph.findStartDestination().id) {
-            saveState = true
-        }
-        launchSingleTop = true
-        restoreState = true
-    }
-
-    when (topLevelDestination) {
-        TopLevelDestination.NOW_PLAYING -> this.navigateToNowPlaying(topLevelNavOptions)
-        TopLevelDestination.FAVORITE -> this.navigateToFavorite(topLevelNavOptions)
     }
 }
 
