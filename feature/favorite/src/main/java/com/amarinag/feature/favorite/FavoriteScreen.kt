@@ -15,10 +15,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import com.amarinag.core.designsystem.theme.spacing
 import com.amarinag.core.model.Movie
 
 @Composable
@@ -44,10 +44,18 @@ private fun FavoriteGrid(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(horizontal = 4.dp, vertical = 4.dp)
+        contentPadding = PaddingValues(
+            horizontal = MaterialTheme.spacing.tiny,
+            vertical = MaterialTheme.spacing.tiny
+        )
     ) {
         items(movies, key = { it.id }) {
-            Card(modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp)) {
+            Card(
+                modifier = Modifier.padding(
+                    horizontal = MaterialTheme.spacing.tiny,
+                    vertical = MaterialTheme.spacing.tiny
+                )
+            ) {
 //                Text(text = it.name)
                 AsyncImage(
                     model = "https://image.tmdb.org/t/p/w500${it.posterPath}",
@@ -56,7 +64,7 @@ private fun FavoriteGrid(
                 Column(
                     Modifier
                         .fillMaxWidth()
-                        .padding(4.dp),
+                        .padding(MaterialTheme.spacing.tiny),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
@@ -71,5 +79,3 @@ private fun FavoriteGrid(
     }
 
 }
-
-
