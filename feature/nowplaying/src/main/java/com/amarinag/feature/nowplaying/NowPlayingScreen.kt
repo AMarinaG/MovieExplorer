@@ -1,5 +1,6 @@
 package com.amarinag.feature.nowplaying
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,7 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.amarinag.core.designsystem.component.LoadingState
 import com.amarinag.core.designsystem.theme.spacing
-import com.amarinag.core.model.Movie
+import com.amarinag.core.model.UserMovie
 
 @Composable
 internal fun NowPlayingRoute(
@@ -57,7 +58,7 @@ internal fun NowPlayingScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NowPlayingGrid(movies: List<Movie>, onMovieClick: (movieId: Int) -> Unit) {
+private fun NowPlayingGrid(movies: List<UserMovie>, onMovieClick: (movieId: Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(
@@ -66,16 +67,20 @@ private fun NowPlayingGrid(movies: List<Movie>, onMovieClick: (movieId: Int) -> 
         ),
         modifier = Modifier.fillMaxSize()
     ) {
-        items(movies, key = { it.id }) {
+        items(movies, key = { it.movie.id }) { userMovie ->
             Card(
-                onClick = { onMovieClick(it.id) },
+                onClick = { onMovieClick(userMovie.movie.id) },
+                border = if (userMovie.isFavorite) BorderStroke(
+                    MaterialTheme.spacing.tiny,
+                    MaterialTheme.colorScheme.primary
+                ) else null,
                 modifier = Modifier.padding(
                     horizontal = MaterialTheme.spacing.tiny,
                     vertical = MaterialTheme.spacing.tiny
                 )
             ) {
                 AsyncImage(
-                    model = "https://image.tmdb.org/t/p/w500${it.posterPath}",
+                    model = "https://image.tmdb.org/t/p/w500${userMovie.movie.posterPath}",
                     contentDescription = "null"
                 )
                 Column(
@@ -85,7 +90,7 @@ private fun NowPlayingGrid(movies: List<Movie>, onMovieClick: (movieId: Int) -> 
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(
-                        text = it.title,
+                        text = userMovie.movie.title,
                         style = MaterialTheme.typography.titleSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis

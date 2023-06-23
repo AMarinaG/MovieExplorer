@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.amarinag.core.common.result.Result
 import com.amarinag.core.common.result.asResult
 import com.amarinag.core.domain.AddFavoriteMoviesUseCase
+import com.amarinag.core.domain.DeleteFavoriteMoviesUseCase
 import com.amarinag.core.domain.GetMovieByIdUseCase
 import com.amarinag.core.model.Movie
+import com.amarinag.core.model.UserMovie
 import com.amarinag.feature.movie.navigation.MovieArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,7 +23,8 @@ import javax.inject.Inject
 class MovieViewModel @Inject constructor(
     getMovieByIdUseCase: GetMovieByIdUseCase,
     savedStateHandle: SavedStateHandle,
-    private val addFavoriteMoviesUseCase: AddFavoriteMoviesUseCase
+    private val addFavoriteMoviesUseCase: AddFavoriteMoviesUseCase,
+    private val deleteFavoriteMoviesUseCase: DeleteFavoriteMoviesUseCase
 ) : ViewModel() {
     private val movieArgs: MovieArgs = MovieArgs(savedStateHandle)
     val movieUiState: StateFlow<MovieUiState> =
@@ -40,9 +43,13 @@ class MovieViewModel @Inject constructor(
                 initialValue = MovieUiState.Loading
             )
 
-    fun toggleFavorite(movie: Movie) {
+    fun toggleFavorite(userMovie: UserMovie) {
         viewModelScope.launch {
-            addFavoriteMoviesUseCase(AddFavoriteMoviesUseCase.Params(movie))
+            if (userMovie.isFavorite) {
+                deleteFavoriteMoviesUseCase(DeleteFavoriteMoviesUseCase.Params(userMovie.movie))
+            } else {
+                addFavoriteMoviesUseCase(AddFavoriteMoviesUseCase.Params(userMovie.movie))
+            }
         }
     }
 }
