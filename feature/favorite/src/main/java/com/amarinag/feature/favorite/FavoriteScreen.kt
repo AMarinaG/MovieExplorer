@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.amarinag.core.designsystem.component.LoadingState
 import com.amarinag.core.designsystem.theme.spacing
 import com.amarinag.core.model.Movie
 
@@ -106,20 +107,6 @@ fun EmptyState() {
     ) {
         Text(
             text = stringResource(id = R.string.no_favorite_movies),
-            style = MaterialTheme.typography.headlineSmall
-        )
-    }
-}
-
-@Composable
-fun LoadingState() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text(
-            text = stringResource(id = R.string.loading),
             style = MaterialTheme.typography.headlineSmall
         )
     }
