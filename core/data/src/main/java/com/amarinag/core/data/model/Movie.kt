@@ -13,7 +13,6 @@ fun NetworkMovie.asDomain(): Movie = Movie(
     originalTitle = originalTitle,
     overview = overview,
     posterPath = posterPath,
-    genreIds = genreIds,
     popularity = popularity,
     releaseDate = releaseDate,
     video = video,

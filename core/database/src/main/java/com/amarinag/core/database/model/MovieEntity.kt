@@ -36,7 +36,6 @@ fun MovieEntity.toDomain() = Movie(
     video = video,
     voteAverage = voteAverage,
     voteCount = voteCount,
-    genreIds = emptyList()
 )
 
 fun List<MovieEntity>.toDomain() = map(MovieEntity::toDomain)

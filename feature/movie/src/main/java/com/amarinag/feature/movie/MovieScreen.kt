@@ -40,11 +40,13 @@ internal fun MovieScreen(
 ) {
     when (movieState) {
         MovieUiState.Loading -> LoadingState()
+        is MovieUiState.Error -> Text(text = movieState.exception?.localizedMessage ?: "Unknow")
         is MovieUiState.Success -> MovieDetail(
             movie = movieState.movie,
             onBackClick = onBackClick,
             toggleFavorite = toggleFavorite
         )
+
     }
 }
 

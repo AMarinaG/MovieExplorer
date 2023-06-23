@@ -21,6 +21,10 @@ class OnlineMovieRepository @Inject constructor(
         emit(network.getNowPlayingMovies().map(NetworkMovie::asDomain))
     }
 
+    override fun getMovieById(movieId: Int): Flow<Movie> = flow {
+        emit(network.getMovieById(movieId).asDomain())
+    }
+
     override fun getFavoriteMovies(): Flow<List<Movie>> =
         movieDao.getFavoriteMovies().map(List<MovieEntity>::toDomain)
 

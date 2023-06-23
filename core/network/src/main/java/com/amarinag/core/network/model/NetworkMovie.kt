@@ -10,8 +10,6 @@ data class NetworkMovie(
     val adult: Boolean,
     @SerialName("backdrop_path")
     val backdropPath: String,
-    @SerialName("genre_ids")
-    val genreIds: List<Int>,
     @SerialName("id")
     val id: Int,
     @SerialName("original_language")

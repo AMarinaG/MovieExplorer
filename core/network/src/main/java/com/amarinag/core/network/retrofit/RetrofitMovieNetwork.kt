@@ -11,4 +11,7 @@ class RetrofitMovieNetwork @Inject constructor(
 ) : MovieNetworkDataSource {
     override suspend fun getNowPlayingMovies(): List<NetworkMovie> =
         networkApi.getNowPlayingMovies().results
+
+    override suspend fun getMovieById(movieId: Int): NetworkMovie =
+        networkApi.getMovieById(movieId)
 }
