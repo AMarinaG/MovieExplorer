@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.amarinag.core.common.result.Result
 import com.amarinag.core.common.result.asResult
 import com.amarinag.core.domain.GetNowPlayingUseCase
+import com.amarinag.core.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,4 +31,7 @@ class NowPlayingViewModel @Inject constructor(getNowPlayingUseCase: GetNowPlayin
                 initialValue = NowPlayingUiState.Loading
             )
 
+    fun navigateToMovieDetail(movie: Movie) {
+
+    }
 }

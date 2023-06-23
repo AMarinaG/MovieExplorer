@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,21 +31,31 @@ internal fun NowPlayingRoute(
     viewModel: NowPlayingViewModel = hiltViewModel()
 ) {
     val state by viewModel.nowPlayingUiState.collectAsStateWithLifecycle()
-    NowPlayingScreen(state)
+    NowPlayingScreen(
+        nowPlayingUiState = state,
+        onMovieClick = viewModel::navigateToMovieDetail
+    )
 
 }
 
 @Composable
-internal fun NowPlayingScreen(nowPlayingUiState: NowPlayingUiState) {
+internal fun NowPlayingScreen(
+    nowPlayingUiState: NowPlayingUiState,
+    onMovieClick: (movie: Movie) -> Unit
+) {
     when (nowPlayingUiState) {
         NowPlayingUiState.Loading -> LoadingState()
         is NowPlayingUiState.Error -> EmptyState()
-        is NowPlayingUiState.Success -> NowPlayingGrid(nowPlayingUiState.movies)
+        is NowPlayingUiState.Success -> NowPlayingGrid(
+            movies = nowPlayingUiState.movies,
+            onMovieClick = onMovieClick
+        )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NowPlayingGrid(movies: List<Movie>) {
+private fun NowPlayingGrid(movies: List<Movie>, onMovieClick: (movie: Movie) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(
@@ -55,6 +66,7 @@ private fun NowPlayingGrid(movies: List<Movie>) {
     ) {
         items(movies, key = { it.id }) {
             Card(
+                onClick = { onMovieClick(it) },
                 modifier = Modifier.padding(
                     horizontal = MaterialTheme.spacing.tiny,
                     vertical = MaterialTheme.spacing.tiny
