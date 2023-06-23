@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.amarinag.core.designsystem.theme.spacing
 import com.amarinag.core.model.Movie
@@ -28,26 +28,35 @@ import com.amarinag.core.model.Movie
 @Composable
 internal fun FavoriteRoute(viewModel: FavoriteViewModel = hiltViewModel()) {
     val favoriteState by viewModel.favoriteUiState.collectAsStateWithLifecycle()
-    FavoriteScreen(favoriteUiState = favoriteState)
+    FavoriteScreen(
+        favoriteUiState = favoriteState,
+        onCardClick = viewModel::deleteFavorite
+    )
 }
 
 @Composable
 internal fun FavoriteScreen(
     favoriteUiState: FavoriteUiState,
+    onCardClick: (movie: Movie) -> Unit
 ) {
     when (favoriteUiState) {
         FavoriteUiState.Loading -> LoadingState()
         is FavoriteUiState.Success -> if (favoriteUiState.movies.isNotEmpty()) {
-            FavoriteGrid(movies = favoriteUiState.movies)
+            FavoriteGrid(
+                movies = favoriteUiState.movies,
+                onCardClick = onCardClick
+            )
 
         } else EmptyState()
     }
 }
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FavoriteGrid(
     movies: List<Movie>,
+    onCardClick: (movie: Movie) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -59,6 +68,7 @@ private fun FavoriteGrid(
     ) {
         items(movies, key = { it.id }) {
             Card(
+                onClick = { onCardClick(it) },
                 modifier = Modifier.padding(
                     horizontal = MaterialTheme.spacing.tiny,
                     vertical = MaterialTheme.spacing.tiny

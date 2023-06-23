@@ -33,7 +33,7 @@ internal fun NowPlayingRoute(
     val state by viewModel.nowPlayingUiState.collectAsStateWithLifecycle()
     NowPlayingScreen(
         nowPlayingUiState = state,
-        onMovieClick = viewModel::navigateToMovieDetail
+        onCardClick = viewModel::navigateToMovieDetail
     )
 
 }
@@ -41,21 +41,21 @@ internal fun NowPlayingRoute(
 @Composable
 internal fun NowPlayingScreen(
     nowPlayingUiState: NowPlayingUiState,
-    onMovieClick: (movie: Movie) -> Unit
+    onCardClick: (movie: Movie) -> Unit
 ) {
     when (nowPlayingUiState) {
         NowPlayingUiState.Loading -> LoadingState()
         is NowPlayingUiState.Error -> EmptyState()
         is NowPlayingUiState.Success -> NowPlayingGrid(
             movies = nowPlayingUiState.movies,
-            onMovieClick = onMovieClick
+            onCardClick = onCardClick
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NowPlayingGrid(movies: List<Movie>, onMovieClick: (movie: Movie) -> Unit) {
+private fun NowPlayingGrid(movies: List<Movie>, onCardClick: (movie: Movie) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(
@@ -66,7 +66,7 @@ private fun NowPlayingGrid(movies: List<Movie>, onMovieClick: (movie: Movie) -> 
     ) {
         items(movies, key = { it.id }) {
             Card(
-                onClick = { onMovieClick(it) },
+                onClick = { onCardClick(it) },
                 modifier = Modifier.padding(
                     horizontal = MaterialTheme.spacing.tiny,
                     vertical = MaterialTheme.spacing.tiny
