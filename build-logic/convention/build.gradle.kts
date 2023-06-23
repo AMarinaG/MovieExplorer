@@ -49,6 +49,10 @@ gradlePlugin {
             id = "amarinag.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("androidRoom") {
+            id = "amarinag.android.room"
+            implementationClass = "AndroidRoomConventionPlugin"
+        }
         register("jvmLibrary") {
             id = "amarinag.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
