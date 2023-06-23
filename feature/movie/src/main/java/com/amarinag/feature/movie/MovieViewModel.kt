@@ -2,6 +2,7 @@ package com.amarinag.feature.movie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.amarinag.core.domain.AddFavoriteMoviesUseCase
 import com.amarinag.core.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -9,10 +10,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieViewModel @Inject constructor() : ViewModel() {
+class MovieViewModel @Inject constructor(private val addFavoriteMoviesUseCase: AddFavoriteMoviesUseCase) :
+    ViewModel() {
     val movieUiState: StateFlow<MovieUiState> = flow {
         delay(2000)
         emit(MovieUiState.Success(movies[0]))
@@ -22,8 +25,10 @@ class MovieViewModel @Inject constructor() : ViewModel() {
         initialValue = MovieUiState.Loading
     )
 
-    fun toggleFavorite(movieId: Int) {
-
+    fun toggleFavorite(movie: Movie) {
+        viewModelScope.launch {
+            addFavoriteMoviesUseCase(AddFavoriteMoviesUseCase.Params(movie))
+        }
     }
 }
 

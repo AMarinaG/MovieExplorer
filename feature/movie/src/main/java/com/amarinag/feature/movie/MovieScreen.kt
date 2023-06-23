@@ -36,7 +36,7 @@ internal fun MovieRoute(onBackClick: () -> Unit, viewModel: MovieViewModel = hil
 internal fun MovieScreen(
     movieState: MovieUiState,
     onBackClick: () -> Unit,
-    toggleFavorite: (movieId: Int) -> Unit
+    toggleFavorite: (movie: Movie) -> Unit
 ) {
     when (movieState) {
         MovieUiState.Loading -> LoadingState()
@@ -52,7 +52,7 @@ internal fun MovieScreen(
 internal fun MovieDetail(
     movie: Movie,
     onBackClick: () -> Unit,
-    toggleFavorite: (movieId: Int) -> Unit
+    toggleFavorite: (movie: Movie) -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
 
@@ -69,7 +69,7 @@ internal fun MovieDetail(
             ) {
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                     Text(text = movie.title, style = MaterialTheme.typography.titleMedium)
-                    IconButton(onClick = { toggleFavorite(movie.id) }) {
+                    IconButton(onClick = { toggleFavorite(movie) }) {
                         Icon(imageVector = Icons.Outlined.FavoriteBorder, contentDescription = null)
                     }
                 }
