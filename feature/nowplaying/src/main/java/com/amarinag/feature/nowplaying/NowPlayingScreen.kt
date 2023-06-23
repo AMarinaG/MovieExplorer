@@ -28,13 +28,14 @@ import com.amarinag.core.model.Movie
 
 @Composable
 internal fun NowPlayingRoute(
+    onMovieClick: (movieId: Int) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: NowPlayingViewModel = hiltViewModel()
 ) {
     val state by viewModel.nowPlayingUiState.collectAsStateWithLifecycle()
     NowPlayingScreen(
         nowPlayingUiState = state,
-        onCardClick = viewModel::navigateToMovieDetail
+        onMovieClick = onMovieClick
     )
 
 }
@@ -42,21 +43,21 @@ internal fun NowPlayingRoute(
 @Composable
 internal fun NowPlayingScreen(
     nowPlayingUiState: NowPlayingUiState,
-    onCardClick: (movie: Movie) -> Unit
+    onMovieClick: (movieId: Int) -> Unit
 ) {
     when (nowPlayingUiState) {
         NowPlayingUiState.Loading -> LoadingState()
         is NowPlayingUiState.Error -> EmptyState()
         is NowPlayingUiState.Success -> NowPlayingGrid(
             movies = nowPlayingUiState.movies,
-            onCardClick = onCardClick
+            onMovieClick = onMovieClick
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun NowPlayingGrid(movies: List<Movie>, onCardClick: (movie: Movie) -> Unit) {
+private fun NowPlayingGrid(movies: List<Movie>, onMovieClick: (movieId: Int) -> Unit) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         contentPadding = PaddingValues(
@@ -67,7 +68,7 @@ private fun NowPlayingGrid(movies: List<Movie>, onCardClick: (movie: Movie) -> U
     ) {
         items(movies, key = { it.id }) {
             Card(
-                onClick = { onCardClick(it) },
+                onClick = { onMovieClick(it.id) },
                 modifier = Modifier.padding(
                     horizontal = MaterialTheme.spacing.tiny,
                     vertical = MaterialTheme.spacing.tiny

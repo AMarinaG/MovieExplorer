@@ -39,6 +39,7 @@ android {
 dependencies {
     implementation(project(":feature:nowplaying"))
     implementation(project(":feature:favorite"))
+    implementation(project(":feature:movie"))
 
     implementation(project(":core:common"))
     implementation(project(":core:designsystem"))

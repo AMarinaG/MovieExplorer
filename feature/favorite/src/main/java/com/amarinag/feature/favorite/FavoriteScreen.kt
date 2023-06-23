@@ -27,25 +27,25 @@ import com.amarinag.core.designsystem.theme.spacing
 import com.amarinag.core.model.Movie
 
 @Composable
-internal fun FavoriteRoute(viewModel: FavoriteViewModel = hiltViewModel()) {
+internal fun FavoriteRoute(onMovieClick: (movieId: Int) -> Unit,viewModel: FavoriteViewModel = hiltViewModel()) {
     val favoriteState by viewModel.favoriteUiState.collectAsStateWithLifecycle()
     FavoriteScreen(
         favoriteUiState = favoriteState,
-        onCardClick = viewModel::deleteFavorite
+        onMovieClick = onMovieClick
     )
 }
 
 @Composable
 internal fun FavoriteScreen(
     favoriteUiState: FavoriteUiState,
-    onCardClick: (movie: Movie) -> Unit
+    onMovieClick: (movieId: Int) -> Unit
 ) {
     when (favoriteUiState) {
         FavoriteUiState.Loading -> LoadingState()
         is FavoriteUiState.Success -> if (favoriteUiState.movies.isNotEmpty()) {
             FavoriteGrid(
                 movies = favoriteUiState.movies,
-                onCardClick = onCardClick
+                onMovieClick = onMovieClick
             )
 
         } else EmptyState()
@@ -57,7 +57,7 @@ internal fun FavoriteScreen(
 @Composable
 private fun FavoriteGrid(
     movies: List<Movie>,
-    onCardClick: (movie: Movie) -> Unit
+    onMovieClick: (movieId: Int) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -69,7 +69,7 @@ private fun FavoriteGrid(
     ) {
         items(movies, key = { it.id }) {
             Card(
-                onClick = { onCardClick(it) },
+                onClick = { onMovieClick(it.id) },
                 modifier = Modifier.padding(
                     horizontal = MaterialTheme.spacing.tiny,
                     vertical = MaterialTheme.spacing.tiny

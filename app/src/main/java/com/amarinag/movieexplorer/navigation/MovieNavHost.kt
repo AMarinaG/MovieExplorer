@@ -4,6 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.amarinag.feature.favorite.navigation.favoriteScreen
+import com.amarinag.feature.movie.navigation.movieScreen
+import com.amarinag.feature.movie.navigation.navigateToMovieDetail
 import com.amarinag.feature.nowplaying.navigation.nowPlayingRoute
 import com.amarinag.feature.nowplaying.navigation.nowPlayingScreen
 import com.amarinag.movieexplorer.ui.MovieAppState
@@ -20,7 +22,8 @@ fun MovieNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        nowPlayingScreen()
-        favoriteScreen()
+        nowPlayingScreen(navController::navigateToMovieDetail)
+        favoriteScreen(navController::navigateToMovieDetail)
+        movieScreen(navController::popBackStack)
     }
 }

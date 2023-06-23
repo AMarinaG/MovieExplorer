@@ -25,4 +25,5 @@ include(":core:model")
 include(":core:network")
 
 include(":feature:favorite")
+include(":feature:movie")
 include(":feature:nowplaying")
