@@ -1,6 +1,7 @@
 package com.amarinag.core.data.repository
 
 import com.amarinag.core.data.model.asDomain
+import com.amarinag.core.data.model.asEntity
 import com.amarinag.core.database.dao.MovieDao
 import com.amarinag.core.database.model.MovieEntity
 import com.amarinag.core.database.model.toDomain
@@ -22,5 +23,9 @@ class OnlineMovieRepository @Inject constructor(
 
     override fun getFavoriteMovies(): Flow<List<Movie>> =
         movieDao.getFavoriteMovies().map(List<MovieEntity>::toDomain)
+
+    override suspend fun addFavorite(movie: Movie) = movieDao.addFavorite(movie.asEntity())
+
+    override suspend fun deleteFavorite(movie: Movie) = movieDao.deleteFavorite(movie.asEntity())
 
 }
