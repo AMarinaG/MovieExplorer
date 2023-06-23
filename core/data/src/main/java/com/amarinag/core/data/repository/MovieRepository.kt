@@ -5,4 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
     fun getPlayNowMovies(): Flow<List<Movie>>
+
+    fun getFavoriteMovies(): Flow<List<Movie>>
 }

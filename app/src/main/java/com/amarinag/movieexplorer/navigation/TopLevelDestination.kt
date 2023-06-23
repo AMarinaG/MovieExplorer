@@ -37,14 +37,14 @@ enum class TopLevelDestination(
     NOW_PLAYING(
         selectedIcon = Icons.Rounded.ArtTrack,
         unselectedIcon = Icons.Outlined.ArtTrack,
-        iconTextId = R.string.app_name,
+        iconTextId = R.string.now_playing,
         titleTextId = R.string.app_name
 
     ),
     FAVORITE(
         selectedIcon = Icons.Rounded.Star,
         unselectedIcon = Icons.Outlined.StarOutline,
-        iconTextId = R.string.app_name,
-        titleTextId = R.string.app_name
+        iconTextId = R.string.favorites,
+        titleTextId = R.string.favorites
     )
 }

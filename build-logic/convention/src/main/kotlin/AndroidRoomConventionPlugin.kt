@@ -16,7 +16,7 @@ class AndroidRoomConventionPlugin: Plugin<Project> {
             pluginManager.apply("com.google.devtools.ksp")
 
             extensions.configure<KspExtension> {
-                arg(RoomSchemaArgProvider(File(projectDir, "schema")))
+                arg(RoomSchemaArgProvider(File(projectDir, "schemas")))
             }
 
             dependencies {
