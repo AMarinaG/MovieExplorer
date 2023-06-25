@@ -14,42 +14,45 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-class GetMovieByIdUseCaseTest {
+
+class GetNowPlayingUseCaseTest {
     @get:Rule
     val mockkRule = MockKRule(this)
 
     @MockK
     private lateinit var movieRepository: MovieRepository
 
-    private lateinit var getMovieByIdUseCase: GetMovieByIdUseCase
+    private lateinit var getNowPlayingUseCase: GetNowPlayingUseCase
 
     @Before
     fun setup() {
-        getMovieByIdUseCase = GetMovieByIdUseCase(movieRepository)
+        getNowPlayingUseCase = GetNowPlayingUseCase(movieRepository)
     }
 
     @Test
     fun `verify returned movie as favorite success`() = runTest {
         givenMovieSuccess()
         givenFavoritesMoviesSuccess()
-        val expected = getMovieByIdUseCase(GetMovieByIdUseCase.Params(ANY_MOVIE_ID)).first()
+        val expected = getNowPlayingUseCase().first()
         coVerify(exactly = 1) { movieRepository.getFavoriteMovies() }
-        coVerify(exactly = 1) { movieRepository.getMovieById(any()) }
+        coVerify(exactly = 1) { movieRepository.getPlayNowMovies() }
 
-        assertThat(expected.movie).isEqualTo(ANY_MOVIE)
-        assertThat(expected.isFavorite).isEqualTo(true)
+        assertThat(expected).hasSize(moviesTestData.size)
+        assertThat(expected.first().movie).isEqualTo(ANY_MOVIES.first())
+        assertThat(expected.first().isFavorite).isEqualTo(true)
     }
 
     @Test
     fun `verify returned movie without favorites success`() = runTest {
         givenMovieSuccess()
         givenFavoritesMoviesSuccess(0)
-        val expected = getMovieByIdUseCase(GetMovieByIdUseCase.Params(ANY_MOVIE_ID)).first()
+        val expected = getNowPlayingUseCase().first()
 
         coVerify(exactly = 1) { movieRepository.getFavoriteMovies() }
-        coVerify(exactly = 1) { movieRepository.getMovieById(any()) }
-        assertThat(expected.movie).isEqualTo(ANY_MOVIE)
-        assertThat(expected.isFavorite).isEqualTo(false)
+        coVerify(exactly = 1) { movieRepository.getPlayNowMovies() }
+        assertThat(expected).hasSize(moviesTestData.size)
+        assertThat(expected.first().movie).isEqualTo(ANY_MOVIES.first())
+        assertThat(expected.first().isFavorite).isEqualTo(false)
 
     }
 
@@ -58,12 +61,12 @@ class GetMovieByIdUseCaseTest {
         givenMovieSuccess()
         givenFavoritesMoviesError()
         try {
-            getMovieByIdUseCase(GetMovieByIdUseCase.Params(ANY_MOVIE_ID)).first()
+            getNowPlayingUseCase().first()
         } catch (ex: Exception) {
             assertThat(ex.localizedMessage).isEqualTo(ANY_ERROR_MESSAGE)
         }
         coVerify(exactly = 1) { movieRepository.getFavoriteMovies() }
-        coVerify(exactly = 1) { movieRepository.getMovieById(any()) }
+        coVerify(exactly = 1) { movieRepository.getPlayNowMovies() }
     }
 
     @Test
@@ -71,16 +74,16 @@ class GetMovieByIdUseCaseTest {
         givenMovieError()
         givenFavoritesMoviesError()
         try {
-            getMovieByIdUseCase(GetMovieByIdUseCase.Params(ANY_MOVIE_ID)).first()
+            getNowPlayingUseCase().first()
         } catch (ex: Exception) {
             assertThat(ex.localizedMessage).isEqualTo(ANY_ERROR_MESSAGE)
         }
-        coVerify(exactly = 1) { movieRepository.getMovieById(any()) }
+        coVerify(exactly = 1) { movieRepository.getPlayNowMovies() }
         coVerify(exactly = 0) { movieRepository.getFavoriteMovies() }
     }
 
     private fun givenMovieSuccess() {
-        coEvery { movieRepository.getMovieById(ANY_MOVIE_ID) } returns flowOf(ANY_MOVIE)
+        coEvery { movieRepository.getPlayNowMovies() } returns flowOf(ANY_MOVIES)
     }
 
     private fun givenFavoritesMoviesSuccess(movieCount: Int = moviesTestData.size) {
@@ -90,7 +93,7 @@ class GetMovieByIdUseCaseTest {
     }
 
     private fun givenMovieError() {
-        coEvery { movieRepository.getMovieById(ANY_MOVIE_ID) } throws ANY_ERROR
+        coEvery { movieRepository.getPlayNowMovies() } throws ANY_ERROR
     }
 
     private fun givenFavoritesMoviesError() {
@@ -98,9 +101,8 @@ class GetMovieByIdUseCaseTest {
     }
 
     private companion object {
-        const val ANY_MOVIE_ID = 1
         const val ANY_ERROR_MESSAGE = "ANY_ERROR_MESSAGE"
         val ANY_ERROR = RuntimeException(ANY_ERROR_MESSAGE)
-        val ANY_MOVIE = moviesTestData.first()
+        val ANY_MOVIES = moviesTestData
     }
 }

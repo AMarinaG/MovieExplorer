@@ -18,8 +18,6 @@ class GetNowPlayingUseCase @Inject constructor(
             val userMovies = movies.map { movie ->
                 UserMovie(movie, movie.id in favorites.map { it.id })
             }
-
-            Log.d("AMG", "userMovies: $userMovies")
             userMovies
 
         }
