@@ -46,6 +46,14 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":core:model"))
 
+
+    androidTestImplementation(project(":core:testing"))
+    androidTestImplementation(project(":core:network"))
+
+
+    androidTestImplementation(kotlin("test"))
+    debugImplementation(libs.androidx.compose.ui.testManifest)
+
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
@@ -57,12 +65,14 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.navigation.compose)
-    testImplementation(libs.junit4)
-    androidTestImplementation(libs.androidx.test.ext)
-    androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.androidx.compose.ui.test)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.testManifest)
     implementation(libs.coil.kt)
 
+}
+
+configurations.configureEach {
+    resolutionStrategy {
+        force(libs.junit4)
+        // Temporary workaround for https://issuetracker.google.com/174733673
+        force("org.objenesis:objenesis:2.6")
+    }
 }

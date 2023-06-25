@@ -17,6 +17,6 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
 
-    androidTestImplementation(libs.androidx.test.ext)
+    testImplementation(project(":core:testing"))
 
 }

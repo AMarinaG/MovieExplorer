@@ -26,6 +26,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
 
-    androidTestImplementation(libs.androidx.test.ext)
+    testImplementation(project(":core:testing"))
 
 }
