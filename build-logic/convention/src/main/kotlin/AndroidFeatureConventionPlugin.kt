@@ -15,6 +15,8 @@ class AndroidFeatureConventionPlugin: Plugin<Project> {
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {
+                    testInstrumentationRunner =
+                        "com.amarinag.core.testing.MovieTestRunner"
                 }
                 // configure Managed Devices
             }
