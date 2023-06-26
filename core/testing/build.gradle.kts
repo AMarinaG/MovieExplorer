@@ -21,6 +21,7 @@ dependencies {
     api(libs.mockk)
     api(libs.mockk.android)
     api(libs.truth)
+    api(libs.turbine)
 
     debugApi(libs.androidx.compose.ui.testManifest)
 
