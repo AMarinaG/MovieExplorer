@@ -18,7 +18,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Rule
 import org.junit.Test
 
-
 class MovieViewModelTest {
     @get:Rule
     val mockkRule = MockKRule(this)
@@ -41,12 +40,12 @@ class MovieViewModelTest {
     private lateinit var viewModel: MovieViewModel
 
     @Test
-    fun `happyPath`() = runTest {
+    fun `movieUiState emit correct loading and success states`() = runTest {
         initViewModel {
             givenSavedStateHandleSuccess()
             givenFavoriteUserMovieSuccess()
         }
-
+        assertThat(viewModel.movieUiState.value).isInstanceOf(MovieUiState.Loading::class.java)
         viewModel.movieUiState.test {
             val result = awaitItem()
             assertThat(result).isInstanceOf(MovieUiState.Success::class.java)
@@ -57,7 +56,7 @@ class MovieViewModelTest {
     }
 
     @Test
-    fun `unhappyPath`() = runTest {
+    fun `movieUiState Fail`() = runTest {
         initViewModel({
             assertThat(it).isInstanceOf(RuntimeException::class.java)
         }) {
