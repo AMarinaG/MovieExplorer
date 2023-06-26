@@ -1,6 +1,7 @@
 plugins {
     id("amarinag.android.library")
     id("amarinag.android.library.compose")
+    id("amarinag.android.library.jacoco")
 }
 
 android {

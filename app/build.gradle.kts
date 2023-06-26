@@ -2,7 +2,9 @@
 plugins {
     id("amarinag.android.application")
     id("amarinag.android.application.compose")
+    id("amarinag.android.application.jacoco")
     id("amarinag.android.hilt")
+    id("jacoco")
 }
 
 android {

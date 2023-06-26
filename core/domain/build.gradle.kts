@@ -1,6 +1,7 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
     id("amarinag.android.library")
+    id("amarinag.android.library.jacoco")
     id("amarinag.android.hilt")
 }
 
@@ -12,7 +13,6 @@ dependencies {
 
     implementation(project(":core:data"))
     implementation(project(":core:model"))
-    implementation(libs.hilt.android)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.datetime)
 

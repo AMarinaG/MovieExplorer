@@ -18,7 +18,7 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 dependencies {
-    compileOnly("com.android.tools.build:gradle:8.1.0-beta05")
+    compileOnly("com.android.tools.build:gradle:8.1.0-rc01")
     compileOnly("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
     compileOnly("com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:1.8.20-1.0.11")
 }
@@ -33,6 +33,10 @@ gradlePlugin {
             id = "amarinag.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+        register("androidApplicationJacoco") {
+            id = "amarinag.android.application.jacoco"
+            implementationClass = "AndroidApplicationJacocoConventionPlugin"
+        }
         register("androidLibraryCompose") {
             id = "amarinag.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
@@ -44,6 +48,10 @@ gradlePlugin {
         register("androidFeature") {
             id = "amarinag.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
+        }
+        register("androidLibraryJacoco") {
+            id = "amarinag.android.library.jacoco"
+            implementationClass = "AndroidLibraryJacocoConventionPlugin"
         }
         register("androidHilt") {
             id = "amarinag.android.hilt"
